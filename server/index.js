@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const CryptoJS = require("crypto-js");
+const User = require("./src/v1/models/user");
 const app = express();
 const PORT = 5000;
 require("dotenv").config();
@@ -13,6 +15,18 @@ try {
 }
 
 //ユーザー新規登録API
+app.post("/register", async (req, res) => {
+  //パスワードの受けとり
+  const password = req.body.password;
+
+  try {
+    //パスワードの暗号化
+    req.body.password = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY);
+    //ユーザーの新規作成
+    const user = await User.create(req.body);
+    //JWTの発行
+  } catch {}
+});
 
 //ユーザーログイン用APi
 
