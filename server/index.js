@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const CryptoJS = require("crypto-js");
+const JWT = require("jsonwebtoken");
 const User = require("./src/v1/models/user");
 const app = express();
 const PORT = 5000;
 require("dotenv").config();
+
+app.use(express.json());
 
 //DB接続
 try {
@@ -25,7 +28,13 @@ app.post("/register", async (req, res) => {
     //ユーザーの新規作成
     const user = await User.create(req.body);
     //JWTの発行
-  } catch {}
+    const token = JWT.sigh({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
+      expiresIn: "24h",
+    });
+    return res.status(200).json({ user, token });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
 //ユーザーログイン用APi
