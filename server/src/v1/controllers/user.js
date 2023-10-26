@@ -22,24 +22,42 @@ exports.register = async (req, res) => {
 };
 
 //ユーザーログイン用APi
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
     //DBからユーザーが存在するか
-    const user = await User.findOne({username:username})
-    if(!user) {
+    const user = await User.findOne({ username: username });
+    if (!user) {
       res.status(401).json({
         errors: {
           param: "username",
-          message: "ユーザー名が無効です"
-        }
-      })
+          message: "ユーザー名が無効です",
+        },
+      });
     }
 
     //パスワードがあっているか照合する。
+    const descryptedPassword = CryptoJS.AES.decrypt(
+      user.password,
+      process.env.SECRET_KEY
+    );
 
+    if (descryptedPassword !== password) {
+      res.status(401).json({
+        errors: {
+          param: "password",
+          message: "パスワードが無効です",
+        },
+      });
+    }
 
+    //JWTを発行
+    const token = JWT.sigh({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
+      expiresIn: "24h",
+    });
+
+    return res.status(201).json({ user, token });
   } catch (err) {
     return res.status(500).json(err);
   }
