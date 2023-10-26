@@ -22,3 +22,25 @@ exports.register = async (req, res) => {
 };
 
 //ユーザーログイン用APi
+exports.login = (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    //DBからユーザーが存在するか
+    const user = await User.findOne({username:username})
+    if(!user) {
+      res.status(401).json({
+        errors: {
+          param: "username",
+          message: "ユーザー名が無効です"
+        }
+      })
+    }
+
+    //パスワードがあっているか照合する。
+
+
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
