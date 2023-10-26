@@ -38,7 +38,8 @@ router.post(
   body("password")
     .isLength({ min: 8 })
     .withMessage("パスワードは8文字以上である必要があります"),
-  validation.validate
+  validation.validate,
+  userController.login
 );
 
 module.exports = router;

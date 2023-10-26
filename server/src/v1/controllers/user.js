@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
     //DBからユーザーが存在するか
     const user = await User.findOne({ username: username });
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         errors: {
           param: "username",
           message: "ユーザー名が無効です",
@@ -41,10 +41,10 @@ exports.login = async (req, res) => {
     const descryptedPassword = CryptoJS.AES.decrypt(
       user.password,
       process.env.SECRET_KEY
-    );
+    ).toString(CryptoJS.enc.Utf8);
 
     if (descryptedPassword !== password) {
-      res.status(401).json({
+      return res.status(401).json({
         errors: {
           param: "password",
           message: "パスワードが無効です",
