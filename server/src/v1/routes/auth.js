@@ -31,7 +31,7 @@ router.post(
 
 //ログイン用API
 router.post(
-  "login",
+  "/login",
   body("username")
     .isLength({ min: 8 })
     .withMessage("ユーザー名は8文字以上である必要があります"),
