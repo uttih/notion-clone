@@ -42,4 +42,6 @@ router.post(
   userController.login
 );
 
+//JWT認証API
+
 module.exports = router;
