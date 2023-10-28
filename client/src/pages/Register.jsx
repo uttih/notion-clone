@@ -34,7 +34,7 @@ const Register = () => {
           required
         />
         <LoadingButton
-          sx={{ mt: 3, bm: 2 }}
+          sx={{ mt: 3, mb: 2 }}
           fullWidth
           type="submit"
           loading={false}
