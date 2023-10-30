@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 require("dotenv").config();
 
 const User = require("../models/user");
@@ -16,7 +16,7 @@ router.post(
   body("password")
     .isLength({ min: 8 })
     .withMessage("パスワードは8文字以上である必要があります"),
-  body("confirmpassword")
+  body("confirmPassword")
     .isLength({ min: 8 })
     .withMessage("確認用パスワードは8文字以上である必要があります"),
   body("username").custom((value) => {
