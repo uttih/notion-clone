@@ -7,8 +7,8 @@ const authUtils = {
     if (!token) return false;
 
     try {
-      const use = await authApi.verifyToken();
-      return resizeBy.user;
+      const res = await authApi.verifyToken();
+      return res.user;
     } catch {
       return false;
     }
