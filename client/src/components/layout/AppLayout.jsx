@@ -1,7 +1,7 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import notionLogo from "../../assets/images/notion-logo.png";
+
 import authUtils from "../../utils/authUtils";
 import Sidebar from "../common/Sidebar";
 
