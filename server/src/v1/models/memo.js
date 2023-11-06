@@ -20,7 +20,7 @@ const memoSchema = new Schema({
     default: "ここに自由に記入してください",
   },
   position: {
-    type: number,
+    type: Number,
   },
   favorite: {
     type: Boolean,
