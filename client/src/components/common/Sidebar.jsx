@@ -14,6 +14,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import memoApi from "../../api/memoApi";
 import { setMemo } from "../../redux/features/memoSlice";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
